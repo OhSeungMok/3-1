@@ -282,7 +282,7 @@ while (i < 10) {
         * 소괄호 안에 값이 없으면 문자열이 배열의 첫 번째 요소가 됨
         * 소괄호에 빈 문자열을 넣으면 대상 문자열이 전부 개별 문자로 쪼개져 각각 배열의 요소가 됨
         * 소괄호 안에 넣은 문자열이 대상 문자열에 있으면 해당 문자열을 기준으로 대상 문자열을 나눔
-    ``` html
+    ``` js
     ['1','2','3'].join('-'); // 1-2-3
     '123'.split() // '123'
 
@@ -313,5 +313,261 @@ while (i < 10) {
     twoArr.flat(); // twoArr[1,2,3,4,5,6]
     
     ```
+* Set으로 중복 요소 제거하기
+    * Set은 배열과 달리 중복을 허용하지 않음
+    * 배열 뿐 아니라 문자열 중복도 제거
 
-    ### 연습문제 (12번까지 다 풀어와도 상관x)
+## 함수 0326
+* 함수(function): 특정한 작업을 수행하는 코드
+``` js
+function a() {} //첫번째 방법
+const b = function() {}; //두번째 방법
+const c = () => {}; //세번째 방법
+
+function a() {
+    return 10;
+}
+a(); //10출력
+
+function a() {
+    console.log('return실행 전');
+    return;
+    console.log('return실행 후');
+}
+a(); //retrun실행 전 출력
+
+function d() {
+    for (let i = 0; i < 5; i++) {
+        if (i >= 3) {
+            return i;
+        }
+    }
+}
+d(); //3출력
+```
+* 매개변수와 인수 사용하기
+    * 인수(argument): 함수를 호출할 떄 넣은 값
+    * 매개변수(parameter): 함수를 선언할 떄 사용한 변수
+``` js
+function aa(w,x,y,z) {
+    console.log(w,x,y,z);
+}
+aa('a','b','c'); //a b c undefined
+
+function aa(w,x,y,z) {
+    console.log(w,x,y,z);
+}
+aa('a','b','c','d','e'); //a b c d 'e'값은 넘어감 매개변수를 맞춰줘라
+```
+* 다른 변수 사용하기
+    * 순수 함수(pure fuction): 자신의 매개변수나 내부 변수(또는 상수)만 사용하는 함수
+* 고차 함수 사용하기
+    * 고차 함수(high dorder function): 함수를 만드는 함수
+``` js
+function minus1(x,y) { //순수 함수
+    const a = 100;
+    return (x-y)*a;
+}
+minus1(5,3); //200 출력
+
+const b = 100;
+function minus2(x,y) { //순수 함수X
+    return (x-y)*b;
+}
+minus1(5,3); //200출력
+
+const func = () => {
+    return () => {
+        console.log("abc");
+    }
+}
+const innerFunc = func();
+innerFunc(); //abc 출력
+
+const func = (msg) => {
+    return () => {
+        console.log(msg);
+    }
+}
+const inner2 = func('하하');
+inner2(); //하하 출력
+const inner2() {
+    console.log('하하');
+} //와 같다고 생각하면 됨
+```
+
+### 객체 리터럴
+* 객체 생성하기
+    * 속성(property): 중괄호로 묶인 정보. 속성 이름과 속성 값으로 구분
+    * 객체 리터럴(object literal): 중괄호를 사용해 객체를 표현하는 것
+* 객체 속성에 접근하기
+    * 속성 이름을 통해 속성 값에 접근
+    * 마침표(.) 사용시 변수.속성
+    * 대괄호([]) 사용시 변수['속성']
+* 객체 속성을 추가/수정/삭제
+    * 추가시 변수.속성=값;
+    * 수정시 변수.속성=값;
+    * 삭제 시 delete 변수.속성;
+``` js
+const human = {
+    name: 'osm',
+    year: 2001,
+    gender: 'M',
+};
+human.name; //osm
+human['name'] //osm
+
+const name = 'osm';
+const year = 2001;
+const human = {name, year};
+human //{name: 'osm', year: 2001}
+human.gender = 'M';
+human //{name: 'osm', year: 2001, gender: 'M'}
+delete human.gender;
+human //{name: 'osm', year: 2001}
+
+const debug = {
+    msg: 'hello',
+    log: function(value) {
+        console.log(value);
+    },
+};
+debug.log('hello');
+
+const human = {
+    name: {
+        first:'os',
+        last:'m',
+    },
+    gender: 'M',
+};
+human.name.first //os
+human['name']['first'] //os
+```
+* ?.연산자: 존재하지 않는 속성에 접근할 때 에러가 발생하는 것을 막아 줌
+    
+``` js
+human.fff.name //에러 발생
+human.fff?.name; //undefined
+```
+
+* 참조와 복사
+``` js
+const a = {name: 'osm'};
+const b = a;
+b.name //osm
+
+let s1 = 'osm';
+let s2 = s1;
+s1 = 'ooo';
+s2 // osm
+
+const array = [{j:'k'}, {l:'m'}];
+const ref = array;
+array === ref //true
+
+const arr1 = [...array]; //얕은 복사
+array === arr1 //false
+array[0] === arr1[0] // true 외부 객체만 복사되고 내부 객체는 참조 관계를 유지하는 복사
+const deep = JSON.parse(JSON.stringify(array)); //깊은 복사 
+array === deep //false
+array[0] === deep[0] //false 내부객체까지 참조 관계가 끊기면서 복사되는 것
+```
+* 구조분해 할당
+    * 객체의 속성 이름과 대입하는 변수명이 같을 때 다음과 같이 줄여서 쓸 수 있음
+``` js
+const person = {name: 'osm'};
+//const name = person.name;
+const {name} = person; // 앞 줄과 같은 의미
+name; //osm
+
+const obj = {a:1, b:2};
+//const a = obj.a;
+//const b =obj.b;
+const obj = {a:1, b:2};
+const {a,b}= obj;
+a; //1
+b; //2
+```
+* 유사 배열 객체
+    * 배열 모양을 한 객체
+    * 배열이 아니므로 배열 메서드를 사용할 수 없음
+``` js
+//const one = array[0];
+const [one, two, three] = array;
+
+let a1 = 5;
+let b1 = 3;
+[b1, a1] = [a1, b1];
+```
+### 함수를 인수로 받는 배열 메서드
+* forEach()와 map()
+    * forEach(): for문을 사용하지 않고도 반복문 수행 가능
+| arr | 1일 때 | 5일 때 | 4일 때 | 2일 때 |
+|---|:---:|:---:|:---:|---:|
+| `number` | 1 | 5 | 4 | 2 |
+| `index` | 0 | 1 | 2 | 3 |
+
+
+* map(): 배열 요소들을 일대일로 작지어서 다른 값으로 변환해 새로운 배열을 반환
+* find(), findIndex(), filter()
+    * find(): 콜백 함수의 반환값이 true인 요소를 찾는 메서드
+    * findIndex(): 찾은 요소의 인덱스를 반환하고, 찾지 못했다면 -1을 반환하는 메서드
+    * filter(): 콜백 함수의 반환값이 true가 되는 모든 요소를 찾아 결과를 배열로 반환하는 메서드
+``` js
+const arr = [1,5,4,2];
+arr.forEach((n,i)=> {
+    console.log(n,i);
+}); 
+//1 0
+//5 1
+//4 2
+//2 3
+
+const numbers2 = Array(5).fill(1).map((v,i) => i+1);
+numbers2; //[1, 2, 3, 4, 5]
+
+const newArr = arr.map((v,i) => {return v*2});
+newArr; //[2, 10, 8, 4]
+
+arr.find((v, i) => {
+    return v > 1;
+}); //5
+
+arr.findIndex((v, i) => {
+    return v > 1;
+}); //1
+
+arr.findIndex((v, i) => {
+    return v > 10;
+}); //찾지 못해서 -1
+
+arr.filter((v) => v%2 == 0); //[4,2]
+```
+* sort()
+    * 비교 함수의 반환값에 따라 배열을 정리하는 메서드
+``` js
+arr.sort((a,b) => a-b);
+[1, 2, 4, 5] //오름차순으로 정렬
+arr.sort((a,b) => b-a);
+[5, 4, 2, 1] //내림차순으로 정렬
+```
+* reduce()
+    * 배열에 있는 반복 메서드의 일종
+    * 배열의 요소들을 하나의 값으로 합침
+    * 초기 값이 없으면 배여르이 첫 번째 요소가 초기 값이 됨
+``` js
+arr.reduce((a,c) => {
+    return a+c;
+}, 0); //12
+```
+* every()와 some()
+    * every(): 하나라도 조건을 만족하지 않는 요소(조건 함수가 false를 반환)를 찾으면 반복 중단
+    * some(): 하나라도 조건을 만족하는 요소(조건 함수가 true를 반환)를 찾으면 반복 중단
+``` js
+arr.every((v) => v !== null); //true
+arr = [5,4,2,1]
+arr2.some((v) => v == null); //true
+arr2 = [1,3,5,null]
+```
+
