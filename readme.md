@@ -571,3 +571,64 @@ arr2.some((v) => v == null); //true
 arr2 = [1,3,5,null]
 ```
 
+## 클래스 0402
+* 클래스(class): 객체를 생성하기 위한 템플릿(서식)
+
+### 함수로 객체를 생성하는 방법
+* 공장 함수(factory function): 객체를 반환하는 함수
+* 새로운 객체가 필요하다면 그때 마다 함수 호출
+``` js
+function createMonster(name, hp) {
+    return {name, hp}
+}
+const mon1 = createMonster('aaa', 100);
+const mon2 = createMonster('bbb', 10);
+// 공장 함수
+mon1.name; //aaa
+
+function Monster(name, hp) {
+    this.name = name;
+    this.hp = hp;
+}
+const mon3 = new Monster('ccc', 200);
+mon3.hp; //200
+
+function createMonster2(name, hp, att) {
+    return {name, hp, att,
+           attack(monster) {
+               monster.hp -= this.att;
+            },
+    };
+}
+const mon4 = createMonster2('슬라임', 25, 10);
+const mon5 = createMonster2('고블린', 50, 20);
+mon4.attack === mon5.attack //false
+
+function Monstrer2(name, hp, att) {
+    this.name;
+    this.hp;
+    this.att;
+}
+Monstrer2.prototype.attack = function(monster) {
+    monster.hp -= this.att;
+}
+const mon6 = new Monstrer2('aaa', 10, 10);
+const mon7 = new Monstrer2('bbb', 20, 20);
+
+mon6.attack === mon7.attack; //true
+
+class Hero extends Unit {
+    constructor(name, hp, att) {
+        super(name, hp, att); //부모 생성자 호출   
+        this.maxHp = hp;
+    }
+    attack(target) {
+        super.attack(target);
+        console.log('attack 추가 기능');
+    }
+    heal() {
+        this.hp = maxHp;
+    }
+}
+.
+```
