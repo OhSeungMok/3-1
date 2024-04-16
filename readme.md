@@ -245,20 +245,20 @@ let b1 = 3;
 [b1, a1] = [a1, b1];
 ```
 ### 함수를 인수로 받는 배열 메서드
-* forEach()와 map()
-    * forEach(): for문을 사용하지 않고도 반복문 수행 가능
+* `forEach()`와 `map()`
+    * `forEach()`: for문을 사용하지 않고도 반복문 수행 가능
+    * `map()`: 배열 요소들을 일대일로 작지어서 다른 값으로 변환해 새로운 배열을 반환
+* `find()`, `findIndex()`, `filter()`
+    * `find()`: 콜백 함수의 반환값이 true인 요소를 찾는 메서드
+    * `findIndex()`: 찾은 요소의 인덱스를 반환하고, 찾지 못했다면 -1을 반환하는 메서드
+    * `filter()`: 콜백 함수의 반환값이 true가 되는 모든 요소를 찾아 결과를 배열로 반환하는 메서드
+
 | arr | 1일 때 | 5일 때 | 4일 때 | 2일 때 |
-|---|:---:|:---:|:---:|---:|
-| `number` | 1 | 5 | 4 | 2 |
-| `index` | 0 | 1 | 2 | 3 |
-
-
-* map(): 배열 요소들을 일대일로 작지어서 다른 값으로 변환해 새로운 배열을 반환
-* find(), findIndex(), filter()
-    * find(): 콜백 함수의 반환값이 true인 요소를 찾는 메서드
-    * findIndex(): 찾은 요소의 인덱스를 반환하고, 찾지 못했다면 -1을 반환하는 메서드
-    * filter(): 콜백 함수의 반환값이 true가 되는 모든 요소를 찾아 결과를 배열로 반환하는 메서드
+|:---:|:---:|:---:|:---:|:---:|
+|`number`| 1 | 5 | 4 | 2 |
+|`index`| 0 | 1 | 2 | 3 |
 ``` js
+//forEach() 예제
 const arr = [1,5,4,2];
 arr.forEach((n,i)=> {
     console.log(n,i);
@@ -268,12 +268,14 @@ arr.forEach((n,i)=> {
 //4 2
 //2 3
 
+//map() 예제
 const numbers2 = Array(5).fill(1).map((v,i) => i+1);
 numbers2; //[1, 2, 3, 4, 5]
 
 const newArr = arr.map((v,i) => {return v*2});
 newArr; //[2, 10, 8, 4]
 
+//find(), findIndex(), filter() 예제
 arr.find((v, i) => {
     return v > 1;
 }); //5
