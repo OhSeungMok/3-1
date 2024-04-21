@@ -578,6 +578,11 @@ while (i < 10) {
     target.pop(); // [-1,0,1,2,3,4,5]
     target.shift(); // [0,1,2,3,4,5]
     target.splice(2); // [0,1,3,4,5] 
+    
+    let arr = [가, 나, 다, 라 , 마, 라]
+    while(arr.indexOf('라') != -1) {
+        arr.splice(arr.indexOf('라'), 1)
+    }
     ```
 
 * 배열에서 요소 찾기
