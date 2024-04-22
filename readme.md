@@ -319,7 +319,7 @@ arr.reduce((a,c) => {
     * every(): 하나라도 조건을 만족하지 않는 요소(조건 함수가 false를 반환)를 찾으면 반복 중단
     * some(): 하나라도 조건을 만족하는 요소(조건 함수가 true를 반환)를 찾으면 반복 중단
 ``` js
-arr.every((v) => v !== null); //true
+arr.every((v) => v !== null); //false
 arr = [5,4,2,1]
 arr2.some((v) => v == null); //true
 arr2 = [1,3,5,null]
