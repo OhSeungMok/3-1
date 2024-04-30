@@ -1,3 +1,294 @@
+## 0430
+무료 호스팅 : https://www.netlify.com/
+<br>브라우저 이벤트 : https://ko.javascript.info/introduction-browser-events
+
+### DOM
+* 선택자(selector) : HTML태그를 가져오게 도와주는 문자열
+* document 객체 : 브라우저에 열려 있는 HTML문서를 나타냄
+```js
+document.querySelector('선택자')
+```
+``` html
+    <input type="text">
+    <button>입력</button>
+    
+    <script>
+        const $input = document.querySelector('input')
+        console.log($input)
+    </script>
+```
+
+``` html
+    <button>입력</button>
+    <button>처리</button>
+    <button>출력</button>
+    
+    <script>
+        const $button = document.querySelector('button')
+        console.log($button)
+    </script>
+
+    console창에서는 button 입력이 나옴, 즉 첫번째만 출력이 나옴 다 나오게 하려면 querySelectorAll을 사용해야함
+    <script>
+        const $$button = document.querySelectorAll('button')
+        console.log($$button)
+    </script>
+
+    <span>임시</span>
+    <div>
+        <span id="order">1</span>번째 참가자
+    </div>
+    <div>
+        제시어 : <span id="word"></span>
+    </div>
+    <input type="text">
+    <button>입력</button>
+    
+    <script>
+        const $span = document.querySelector('div  span')
+        console.log($span)
+    </script>
+    span태그가 겹치는 경우 부모를 선택해 사용할 수 있음
+    
+    <span>임시</span>
+    <div>
+        <span id="order">1</span>번째 참가자
+    </div>
+    <div>
+        제시어 : <span id="word"></span>
+    </div>
+    <input type="text">
+    <button>입력</button>
+    
+    <script>
+        const $input = document.querySelector('input')
+        $input.value = 123;
+        $input.focus();
+    </script>
+```
+### 이벤트와 이벤트 리스너
+* 이벤트(event) : 사용자가 태그와 상호작용할 때 발생
+* 이벤트 리스너(event listener) : 자바스크립트가 HTML에서 발생하는 이벤트를 감지할 수 있게함
+
+이벤트 리스너 추가하기
+* addEventListener()
+``` js
+태그.addEventListener('<이벤트 이름>', <이벤트 리스너>)
+```
+
+``` js
+    <div>
+        <span id="order">1</span>번째 참가자
+    </div>
+    <div>
+        제시어 : <span id="word"></span>
+    </div>
+    <input type="text">
+    <button>입력</button>
+    
+    <script>
+        const onClickButton = () => {
+            console.log('버튼 클릭')
+        }
+        const $button = document.querySelector('button');
+        $button.addEventListener('click', onClickButton)
+    </script>
+    이벤트 리스너를 사용할 때 사용할 함수를 먼저 명시해야 함
+    <script>
+        const $button = document.querySelector('button');
+        $button.addEventListener('click', ()=> {
+            console.log("버튼클릭")
+        })
+    </script>
+    복잡한 코드가 아니면 바로 함수를 만들어 사용 가능
+
+        <script>
+        const onInput = (event) => {
+            console.log('글자 입력', event.target.value)
+        }
+        const $button = document.querySelector('button');
+        $button.addEventListener('click', ()=> {
+            console.log("버튼클릭")
+        })
+
+        const $input = document.querySelector('input')
+        $input.addEventListener('input', onInput)
+    </script>    
+        
+        $input.removeEventListener('input', onInput)
+        은 이 이벤트 리스너를 제거하겠다 익명 함수는 제거가 안 됨.
+
+    <script>
+        window.addEventListener('keyup', (event) => {
+            console.log('keyup', event)
+        })
+        window.addEventListener('keydown', (event) => {
+            console.log('keydown', event)
+        })
+    </script>
+    window를 지정해 전원 객체로 지정하고 키보드를 누르고 땠을 때 이벤트 지정
+
+    <script>
+        window.addEventListener('mousedown', (event) => {
+            console.log('mousedown', event)
+        })
+    </script>
+    마우스 이벤트 지정 좌표가 출력됨 mouseup도 같음
+
+    <script>
+        window.addEventListener('mousemove', (event) => {
+            console.log('mousemove', event)
+        })
+    </script>
+    마우스를 움직일 때 마다 이벤트 발생
+
+    <script>
+        let start; // 마우스를 클릭했을 때 시작지점
+        window.addEventListener('mousedown', (event) => {
+            start = [event.clientX, event.clientY]
+        })
+        window.addEventListener('mouseup', (event) => {
+            const end = [event.clientX, event.clientY];
+            const diffx = end[0] - start[0];
+            const diffy = end[1] - start[1];
+            const isUnder45 = Math.abs(diffx) > Math.abs(diffy);
+            if (diffx< 0 && isUnder45) {
+                console.log('왼쪽')
+            } else if (diffx > 0 && isUnder45) {
+                console.log('오른쪽')
+            } else if (diffy > 0 && !isUnder45) {
+                console.log('아래쪽')
+            } else if (diffy < 0 && !isUnder45) {
+                console.log('위쪽')
+            }
+        })
+    </script>
+    마우스 드래그 각도에 따른 이벤트 발생 
+
+    <script>
+        const $button = document.querySelector('button');
+        $button.addEventListener('contextmenu', (event)=> {
+            event.preventDefault(); //컨텍스트 메뉴 X
+            console.log('우클릭');
+        })
+        //drag, drop, scroll, wheel
+    </script>
+    버튼 우클릭시 컨텍스트 메뉴 안 뜨게하기
+```
+### 태그 속성 다루기
+* DOM을 통해 자바스크립트로 태그 속성을 다룰 수 있음
+``` js
+    <script>
+    document.querySelector('input').type
+    document.querySelector('input').name
+    document.querySelector('input').value
+    </script>
+```
+``` js
+    <script>
+        $button = document.querySelector('.btn')
+        $button.className = 'btn1 btn2'
+    </script>
+    버튼 클래스 명 바꾸기 //.btn => btn1 btn2
+
+    <script>
+        $button = document.querySelector('.btn')
+        $button.classList.add('btn1', 'btn2')
+    </script>
+    버튼 클래스 명 추가하기 //.btn => btn btn1 btn2
+```
+``` js
+    <script>
+        console.log(document.querySelector('div').parentNode)
+        console.log(document.querySelector('body').children)
+    </script>
+    부모, 자식의 태그 부르기
+```
+
+``` js
+    <form action="" method="get" id="form">
+        <input type="text" name="name" id="name" required>
+        <input type="email" name="email" id="email" required>
+        <button name="button" type="submit">구독</button>
+    </form>
+    
+    <script>
+        const $form = document.querySelector('#form');
+        console.log($form[0]);
+        console.log($form[1]);
+        console.log($form[2]);
+        
+        console.log($form.name);
+        console.log($form.email);
+        console.log($form.button);
+    </script>
+```
+
+``` js
+    <script>
+        const $button = document.createElement('button')
+        $button.classList.add('login')
+        $button.style.fontSize = '15px';
+        $button.textContent = '버튼';
+        document.body.append($button);
+    </script>
+    script태그를 통해 button을 만들 수 있음
+```
+``` js
+    <script>
+        // DOM이 완전히 로드된 후에 스크립트를 실행하도록 이벤트 리스너를 추가합니다.
+        document.addEventListener('DOMContentLoaded', function() {
+            // <table> 요소를 생성합니다.
+            const $table = document.createElement('table');
+            // $table에 border 속성을 추가합니다.
+            $table.setAttribute('border', '1');
+            // 4개의 행을 생성합니다.
+            for(let i = 0; i < 4; i++) {
+                const $tr = document.createElement('tr');
+                // $table에 행을 추가합니다.
+                $table.append($tr);
+                // 각 행에 4개의 열을 생성합니다.
+                for(let j = 0; j < 4; j++) {
+                    const $td = document.createElement('td');
+                    // 각 셀에 '칸'이라는 텍스트를 추가합니다.
+                    $td.textContent = '칸';
+                    // 각 행에 열을 추가합니다.
+                    $tr.append($td);
+                }
+            }
+            // <table> 요소를 body에 추가합니다.
+            document.body.append($table);
+        });
+    </script>
+    script태그를 통해 표 만들기
+```
+### 알람창
+``` js
+    <script>
+        let number = parseInt(prompt("몇 명이 참가하나요?"))
+    </script>
+
+    
+    <script>
+        confirm("확인 또는 취소")
+    </script> //확인 OR 취소 (true or false)
+```
+
+### Math 객체
+* Math 객체 : 수학에 사용하는 다양한 메서드가 제공
+    * Math.random() 0 ~ 0.99999
+    * Math.random()*6  0 ~ 6.999999
+    * Math.round(Math.random()*6)  1 ~ 6
+
+### Date 생성자 함수
+``` js
+    (연, 월, 일, 시, 분, 초, 밀리초);
+    <script>
+        const date = new Date(2024, 4, 30);
+        console.log(date)
+    </script>
+```
+    
 ## 0402
 ### 클래스 
 * 클래스(class): 객체를 생성하기 위한 템플릿(서식)
@@ -556,7 +847,7 @@ while (i < 10) {
 * 배열의 요소 개수 구하기
     * 배열 이름 뒤에 .length 붙이기
     * 빈 값도 유효한 값이므로 요소 개수를 셀 때 포함
-    * 요소를 찾는 방법: 인데스 사용하기, at() 사용하기
+    * 요소를 찾는 방법: 인덱스 사용하기, at() 사용하기
 
 * 배열에 요소 추가하기
     * 원하는 배열의 인덱스에 값 대입
