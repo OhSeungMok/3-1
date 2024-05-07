@@ -40,6 +40,34 @@ jQuery 코드 (head 태그)
         });
     </script>
 ```
+내장 객체
+자바스크립트에서 제공하는 이미 만들어져 있는 객체 → 기능 제공 (라이브러리)
+``` js
+var now = new Date(); // 현재 시각을 기준으로 시간 객체가  만들어짐
+now.getMonth();
+now.getDate();
+now.getTime();
+```
+``` js
+<script>
+  //1. Date 객체 생성
+  var now = new Date();
+  //2. 연도를 가져오는 메서드 .getFullYear()
+  console.log(now.getFullYear());
+  //3. 월 정보를 가져오는 메서드 .getMonth() {0: 1월, 1: 2월, ... 10: 11월, 11: 12월}
+  console.log(now.getMonth());
+  //4. 일 정보를 가져오는 메서드 .getDate()
+  console.log(now.getDate());
+  //5. 1970년 1월 1일 00:00:00을 기준으로 흐른 시간을 밀리초로 표시하는 메서드 .getTime()
+  console.log(now.getTime());
+  //6. 특정 일의 Date 객체 생성
+  var christmas = new Date('2021-12-25');
+  console.log(christmas);
+  //7. 특정 ms의 Date 객체 생성
+  var ms = new Date(1000); // 1970-01-01을 기준으로 1000ms(1초) 지난 객체 생성
+  console.log(ms);
+</script>
+```
 ## 0430
 무료 호스팅 : https://www.netlify.com/
 <br>브라우저 이벤트 : https://ko.javascript.info/introduction-browser-events
