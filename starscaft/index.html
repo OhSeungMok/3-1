@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">  
+  <title>미니 스타크래프트</title>  
+  <link rel="stylesheet" href="style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+<body>
+  <h1 id='hp'>HP: 3</h1>
+    <div class='background'>
+        <img id='drone' src="images/drone.png" alt="drone">
+        <img id='spit' src="images/spit.png" alt="spit">
+        <img id='bunker' src="images/bunker.png" alt="bunker">
+    </div>
+    <script>
+        var hp = 3;
+        $("#drone").click(function() {      
+          console.log("침 발사");       
+          $("#spit").fadeIn();      
+          $("#spit").animate({left: '+=250'}) 
+          $("#spit").fadeOut(function() {
+            hp = hp - 1;
+            $("#hp").text("HP: " + hp);      
+            if (hp == 0) {
+              $("#bunker").fadeOut();
+            }
+          });     
+          $("#spit") .css({left:'150px'});//초기 위치      
+        });
+      </script>
+</body>
+</html>

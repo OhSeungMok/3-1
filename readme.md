@@ -11,6 +11,35 @@ Bootstrap 코드 (head태그)
 조립하듯이 가져다 사용하면 됨
 
 
+> jQuery의 장점
+> 
+- 간결한 문법
+- 편리한 API
+- 크로스 브라우징
+
+> jQuery 시작하기
+> 
+- jQuery 공식 사이트(code.jquery.com) 들어가기
+- jQuery 3.x → minified 버전 클릭 → 코드 복붙
+
+jQuery 코드 (head 태그)
+``` js
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+```
+``` js
+    <textarea id="content">jQuery 기초</textarea>
+    <script>
+        console.log($("#content").val());
+    </script>
+```
+``` js
+    <button id="Click">클릭</button>
+    <script>
+        $("#Click").click(function() {
+            console.log('hello')
+        });
+    </script>
+```
 ## 0430
 무료 호스팅 : https://www.netlify.com/
 <br>브라우저 이벤트 : https://ko.javascript.info/introduction-browser-events
