@@ -1,3 +1,9 @@
+## 0507
+``` js
+document.write("<div class='ball ball6'>" + lotto[5] + "</div>");
+```
+자바스크립트 내에서 동적으로 만들 수 있다.
+
 ## 0430
 무료 호스팅 : https://www.netlify.com/
 <br>브라우저 이벤트 : https://ko.javascript.info/introduction-browser-events
