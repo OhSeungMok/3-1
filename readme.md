@@ -4,6 +4,13 @@ document.write("<div class='ball ball6'>" + lotto[5] + "</div>");
 ```
 자바스크립트 내에서 동적으로 만들 수 있다.
 
+``` js
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+```
+Bootstrap 코드 (head태그)
+조립하듯이 가져다 사용하면 됨
+
+
 ## 0430
 무료 호스팅 : https://www.netlify.com/
 <br>브라우저 이벤트 : https://ko.javascript.info/introduction-browser-events
