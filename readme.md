@@ -1,3 +1,6 @@
+## 0514
+
+
 ## 0507
 ``` js
 document.write("<div class='ball ball6'>" + lotto[5] + "</div>");
