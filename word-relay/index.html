@@ -7,11 +7,26 @@
 <body>
     <div><span id="order">1</span>번째 참가자</div>
     <div>제시어 : <span id="word"></span></div>
-    <input type="text">
+    <input type="text" id="textInput">
     <button>입력</button>
     
     <script>
-        const number = Number(prompt("참가자는 몇 명인가요?"));
+        let number;
+        do {
+            const inputNum = prompt("참가자는 몇 명인가요?");
+            if (inputNum === null) {
+                // 사용자가 취소 버튼을 눌렀을 때
+                alert("입력이 취소되었습니다.");
+            }
+            if (!isNaN(inputNum)) { 
+                //숫자가 아닐 경우
+                alert("올바른 숫자를 입력하세요.");
+            } else {
+                //숫자일 경우 탈출
+                break;
+            }
+        } while (true);
+
         const $input = document.querySelector('input');
         const $button = document.querySelector('button');
         const $word = document.querySelector('#word'); 
