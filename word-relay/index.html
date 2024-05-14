@@ -12,20 +12,20 @@
     
     <script>
         let number;
-        do {
+        while (true) {
             const inputNum = prompt("참가자는 몇 명인가요?");
             if (inputNum === null) {
                 // 사용자가 취소 버튼을 눌렀을 때
                 alert("입력이 취소되었습니다.");
-            }
-            if (!isNaN(inputNum)) { 
-                //숫자가 아닐 경우
+            } else if (!isNaN(Number(inputNum))) {
+                // 입력된 값이 숫자가 아닌 경우
                 alert("올바른 숫자를 입력하세요.");
             } else {
-                //숫자일 경우 탈출
+                // 입력된 값이 숫자인 경우
+                number = Number(inputNum);
                 break;
             }
-        } while (true);
+        }
 
         const $input = document.querySelector('input');
         const $button = document.querySelector('button');
