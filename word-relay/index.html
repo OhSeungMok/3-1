@@ -1,63 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>끝말잇기</title>
-</head>
-<body>
-    <div><span id="order">1</span>번째 참가자</div>
-    <div>제시어 : <span id="word"></span></div>
-    <input type="text" id="textInput">
-    <button>입력</button>
-    
-    <script>
-        let number;
-        while (true) {
-            const inputNum = prompt("참가자는 몇 명인가요?");
-            if (inputNum === null) {
-                // 사용자가 취소 버튼을 눌렀을 때
-                alert("입력이 취소되었습니다.");
-            } else if (!isNaN(Number(inputNum))) {
-                // 입력된 값이 숫자가 아닌 경우
-                alert("올바른 숫자를 입력하세요.");
-            } else {
-                // 입력된 값이 숫자인 경우
-                number = Number(inputNum);
-                break;
-            }
-        }
-
-        const $input = document.querySelector('input');
-        const $button = document.querySelector('button');
-        const $word = document.querySelector('#word'); 
-        const $order = document.querySelector('#order');
-        let newWord; // 현재 단어
-        let word; // 제시어, 기존에 있던 단어
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>끝말잇기</title>
+    </head>
+    <body>
+        <div><span id="order">1</span>번째 참가자</div>
+        <div>제시어 : <span id="word"></span></div>
+        <input type="text" id="textInput">
+        <button id="button">입력</button>
         
-        const onInput = (event) => {
-            newWord = event.target.value;
-        }
+        <script>
+            const $input = document.querySelector('input');
+            const $button = document.querySelector('button');
+            const $word = document.querySelector('#word'); 
+            const $order = document.querySelector('#order');
+            let newWord; // 현재 단어
+            let word; // 제시어, 기존에 있던 단어
+            const inputValue = prompt("참가자는 총 몇 명인가요?")
 
-        const onClickButton = (event) => {
-            if (!word || word.at(-1)=== newWord[0]) { // 제시어가 비어(첫번째) 있거나 첫번째 제시어의 마지막 단어와 현재 단어의 첫번째 단어가 맞을 경우
-                word = newWord;
-                $word.textContent = word;
-                const order = Number($order.textContent)
-                if (order + 1 > number) {
+            const onInput = (event) => {
+                if (inputValue === null || isNaN(Number(inputValue))) {
+                    newWord = null; // 값을 null로 설정하여 넘기지 못하게 함
                     $order.textContent = 1;
                 } else {
-                    $order.textContent = order + 1;
-                }
-            } else { // 제시어가 비어 있지 않음
-                alert('틀린 단어 입니다.')    
-                return // return을 사용해 input 초기화 방지
-            }    
-            $input.value = '';
-            $input.focus();
-        }
+                newWord = event.target.value;
+                }                
+            }
 
-        $input.addEventListener('input', onInput);
-        $button.addEventListener('click', onClickButton);
-    </script>
-</body>
-</html>
+            const onClickButton = (event) => {
+                if (!word || word[word.length - 1] === newWord[0]) { // 제시어가 비어(첫번째) 있거나 첫번째 제시어의 마지막 단어와 현재 단어의 첫번째 단어가 맞을 경우
+                    const order = Number($order.textContent);
+                    if (inputValue === null || isNaN(Number(inputValue))) {
+                        $order.textContent = 1;
+                    } else if (newWord.length !== 3) {
+                        alert("틀린 단어입니다!");
+                        newWord = null;
+                        word = null;
+                        $input.value = '';            
+                        $input.focus();      
+                        return;
+                    } else {
+                        $order.textContent = order + 1;
+                        word = newWord;
+                        $word.textContent = word;
+                    }
+                } else { // 제시어가 비어 있지 않음
+                    alert('틀린 단어입니다!');
+                    $input.value = '';
+                    $input.focus();
+                    return;
+                }
+            }
+
+
+            $input.addEventListener('input', onInput);
+            $button.addEventListener('click', onClickButton);
+        </script>
+    </body>
+    </html>

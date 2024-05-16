@@ -57,20 +57,21 @@
     <script>
         let numOne = '';
         let numTwo = '';
+        let numThr = '';
         let operator = '';
         const $operator = document.querySelector('#operator');
         const $result = document.querySelector('#result');
 
         const onClickNum = (e) => {
-            if (!operator) {
+            if (!operator) { // 연산자가 없을 때 즉 첫번째 숫자를 입력할 때
                 numOne += e.target.textContent;
                 $result.value += e.target.textContent;
-            } else {
-               if(!numTwo) {
-                    $result.value = "";
-                }
+            } else if (!numTwo) {
                 numTwo += e.target.textContent;
-                $result.value += e.target.textContent;
+                $result.value = numTwo;
+            } else if (!numThr) {
+                numThr += e.target.textContent;
+                $result.value = numThr;
             }
         };
 
@@ -95,24 +96,28 @@
         document.querySelector('#clear').addEventListener('click',() => {
             numOne = '';
             numTwo = '';
+            numThr = '';
             operator = '';
             $operator.textContent = '';
             $result.value = '';
         });
         document.querySelector('#calculate').addEventListener('click',() => {
             if(numTwo) {
+                if (!numThr) {
+                    numThr = '0';
+                }
                 switch(operator) {
                     case '+':
-                        $result.value = parseInt(numOne) + parseInt(numTwo);
+                        $result.value = parseInt(numOne) + parseInt(numTwo) + parseInt(numThr);
                         break;
                     case '-':
-                        $result.value = numOne - numTwo;
+                        $result.value = parseInt(numOne) - parseInt(numTwo) - parseInt(numThr);
                         break;
                     case '/':
-                        $result.value = numOne / numTwo;
+                        $result.value = parseInt(numOne) / parseInt(numTwo) / parseInt(numThr);
                         break;
                     case '*':
-                        $result.value = numOne * numTwo;
+                        $result.value = parseInt(numOne) * parseInt(numTwo) * parseInt(numThr);
                         break;
                     default:
                         break;
