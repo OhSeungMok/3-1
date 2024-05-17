@@ -62,7 +62,7 @@
       const $operator = document.querySelector("#operator");
       const $result = document.querySelector("#result");
 
-      const onClickNumber = (event) => {
+      const onClickNum = (event) => {
         if (!operator) {
           numOne += event.target.textContent;
           $result.value += event.target.textContent;
@@ -74,17 +74,11 @@
         numTwo += event.target.textContent;
         $result.value += event.target.textContent;
       };
-
-      document.querySelector("#num-0").addEventListener("click", onClickNumber);
-      document.querySelector("#num-1").addEventListener("click", onClickNumber);
-      document.querySelector("#num-2").addEventListener("click", onClickNumber);
-      document.querySelector("#num-3").addEventListener("click", onClickNumber);
-      document.querySelector("#num-4").addEventListener("click", onClickNumber);
-      document.querySelector("#num-5").addEventListener("click", onClickNumber);
-      document.querySelector("#num-6").addEventListener("click", onClickNumber);
-      document.querySelector("#num-7").addEventListener("click", onClickNumber);
-      document.querySelector("#num-8").addEventListener("click", onClickNumber);
-      document.querySelector("#num-9").addEventListener("click", onClickNumber);
+      
+      // num-0번 부터 num-9번까지 
+      for (let i = 0; i < 10; i++) {
+            document.querySelector(`#num-${i}`).addEventListener('click', onClickNum);
+        }
 
       const onClickOperator = (op) => () => {
         if (numTwo) {
