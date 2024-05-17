@@ -54,78 +54,101 @@
       <button id="calculate">=</button>
       <button id="multiply">x</button>
     </div>
+
     <script>
-        let numOne = '';
-        let numTwo = '';
-        let numThr = '';
-        let operator = '';
-        const $operator = document.querySelector('#operator');
-        const $result = document.querySelector('#result');
+      let numOne = "";
+      let numTwo = "";
+      let operator = "";
+      const $operator = document.querySelector("#operator");
+      const $result = document.querySelector("#result");
 
-        const onClickNum = (e) => {
-            if (!operator) { // 연산자가 없을 때 즉 첫번째 숫자를 입력할 때
-                numOne += e.target.textContent;
-                $result.value += e.target.textContent;
-            } else if (!numTwo) {
-                numTwo += e.target.textContent;
-                $result.value = numTwo;
-            } else if (!numThr) {
-                numThr += e.target.textContent;
-                $result.value = numThr;
-            }
-        };
-
-        // num-0번 부터 num-9번까지 
-        for (let i = 0; i < 10; i++) {
-            document.querySelector(`#num-${i}`).addEventListener('click', onClickNum);
+      const onClickNumber = (event) => {
+        if (!operator) {
+          numOne += event.target.textContent;
+          $result.value += event.target.textContent;
+          return;
         }
+        if (!numTwo) {
+          $result.value = "";
+        }
+        numTwo += event.target.textContent;
+        $result.value += event.target.textContent;
+      };
 
-        const onClickOperator = (op) => () => {
-            if (numOne) {
-                operator = op;
-                $operator.value = op;
-            } else {
-                alert("숫자를 먼저 입력하세요.");
-            }
-        };
-        
-        document.querySelector('#plus').addEventListener('click',onClickOperator('+'));
-        document.querySelector('#minus').addEventListener('click',onClickOperator('-'));
-        document.querySelector('#divide').addEventListener('click',onClickOperator('/'));
-        document.querySelector('#multiply').addEventListener('click',onClickOperator('*'));
-        document.querySelector('#clear').addEventListener('click',() => {
-            numOne = '';
-            numTwo = '';
-            numThr = '';
-            operator = '';
-            $operator.textContent = '';
-            $result.value = '';
-        });
-        document.querySelector('#calculate').addEventListener('click',() => {
-            if(numTwo) {
-                if (!numThr) {
-                    numThr = '0';
-                }
-                switch(operator) {
-                    case '+':
-                        $result.value = parseInt(numOne) + parseInt(numTwo) + parseInt(numThr);
-                        break;
-                    case '-':
-                        $result.value = parseInt(numOne) - parseInt(numTwo) - parseInt(numThr);
-                        break;
-                    case '/':
-                        $result.value = parseInt(numOne) / parseInt(numTwo) / parseInt(numThr);
-                        break;
-                    case '*':
-                        $result.value = parseInt(numOne) * parseInt(numTwo) * parseInt(numThr);
-                        break;
-                    default:
-                        break;
-                }
-            } else {
-                alert('숫자를 먼저 입력하세요.');
-            }
-        });
+      document.querySelector("#num-0").addEventListener("click", onClickNumber);
+      document.querySelector("#num-1").addEventListener("click", onClickNumber);
+      document.querySelector("#num-2").addEventListener("click", onClickNumber);
+      document.querySelector("#num-3").addEventListener("click", onClickNumber);
+      document.querySelector("#num-4").addEventListener("click", onClickNumber);
+      document.querySelector("#num-5").addEventListener("click", onClickNumber);
+      document.querySelector("#num-6").addEventListener("click", onClickNumber);
+      document.querySelector("#num-7").addEventListener("click", onClickNumber);
+      document.querySelector("#num-8").addEventListener("click", onClickNumber);
+      document.querySelector("#num-9").addEventListener("click", onClickNumber);
+
+      const onClickOperator = (op) => () => {
+        if (numTwo) {
+          calculate();
+          operator = op;
+          $operator.value = op;
+        }
+        if (numOne) {
+          operator = op;
+          $operator.value = op;
+        } else {
+          alert("숫자를 먼저 입력하세요.");
+        }
+      };
+
+      document
+        .querySelector("#plus")
+        .addEventListener("click", onClickOperator("+"));
+      document
+        .querySelector("#minus")
+        .addEventListener("click", onClickOperator("-"));
+      document
+        .querySelector("#multiply")
+        .addEventListener("click", onClickOperator("*"));
+      document
+        .querySelector("#divide")
+        .addEventListener("click", onClickOperator("/"));
+      document.querySelector("#clear").addEventListener("click", () => {
+        numOne = "";
+        numTwo = "";
+        operator = "";
+        $result.value = "";
+        $operator.value = "";
+      });
+      document.querySelector("#calculate").addEventListener("click", () => {
+        calculate();
+      });
+
+      const calculate = () => {
+        if (numTwo) {
+          switch (operator) {
+            case "+":
+              $result.value = parseInt(numOne) + parseInt(numTwo);
+              break;
+            case "-":
+              $result.value = numOne - numTwo;
+              break;
+            case "*":
+              $result.value = numOne * numTwo;
+              break;
+            case "/":
+              $result.value = numOne / numTwo;
+              break;
+            default:
+              break;
+          }
+          $operator.value = "";
+          numOne = $result.value;
+          operator = "";
+          numTwo = "";
+        } else {
+          alert("숫자를 먼저 입력하세요. ");
+        }
+      };
     </script>
   </body>
 </html>
