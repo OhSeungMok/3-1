@@ -77,19 +77,26 @@
             await setTimeoutPromise(0) //대화상자 출력 지연
             let count = 0;
             myNumbers.forEach((my) => {
+                if (winBalls.includes(my)) {
                 count++;
-            })    
-        })
-        if (count === 6) {
-            alert('1등! 현실 로또 당첨될 운을 여기에 쓰시다니...');
-        } else if (count === 5) {
-            if (myNumbers.includes(bonus)) {
-                alert('2등! 보너스 공이지만 숫자 6개를 맞추셨네요.');
+                }
+            }) 
+            if (count === 6) {
+                alert('1등! 현실 로또 당첨될 운을 여기에 쓰시다니...');
+            } else if (count === 5) {
+                if (myNumbers.includes(bonus)) {
+                    alert('2등! 보너스 공이지만 숫자 6개를 맞추셨네요.');
+                } else {
+                    alert('3등! 아쉽습니다. 그래도 축하드려요.');
+                }
+            } else if (count === 4) {
+                alert('4등! 5만 원 축하드려요.');
+            } else if (count === 3) {
+                alert('5등! 5천 원 축하드려요.');
             } else {
-                alert('3등! 아쉽습니다. 그래도 축하드려요.');
+                alert('로또 참 어렵죠?');
             }
-        } else if
-
+        })
     </script>
 </body>
 </html>
