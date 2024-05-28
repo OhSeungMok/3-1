@@ -53,7 +53,14 @@
                 const current = endTime - startTime;
                 records.push(current);
                 const average = records.reduce((a,c) => a+c) / records.length;
-                $result.textContent = `현재 ${current}ms, 평균 ${average}ms`;
+                
+                // 가장 빠른 5개의 시도를 선택
+                let topFiveRecords = records.slice().sort((a, b) => a - b).slice(0, 5);
+
+                // 상위 5개의 기록을 순위별로 나열하여 결과 표시
+                let topFiveText = topFiveRecords.map((time, index) => `${index + 1}위: ${time}ms`).join('<br>');
+                // 결과 표시
+                $result.innerHTML = `현재 ${current}ms, 평균 ${average}ms<br>${topFiveText}`;
                 startTime = null;
                 endTime = null;
                 $screen.classList.replace('now', 'waiting');
