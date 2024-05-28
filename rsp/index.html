@@ -56,12 +56,18 @@
         
         let intervalId = setInterval(changeComputerHand, 50);
         let clickable = true;
-        let score = 0;
+        let humanWin = 0;
+        let comWin = 0;
+        let count=0;
         const clickButton = (e) => {
             if(clickable) {
                 clickable = false;
                 const myChoice = e.target.textContent === '바위' ? 'rock' : e.target.textContent === '가위' ? 'sissors' : 'paper'
-
+                //가위 : 1, 바위 : 0, 보 : -1
+                //사용자,컴퓨터  가위  바위  보
+                //가위            0    1   2
+                //바위           -1    0   1
+                //보             -2   -1   0
                 const scoreTable = {
                     scissors:1,
                     rock:0,
@@ -72,22 +78,32 @@
                 const diff = myScore - computerScore;
                 let message;
                 if (diff === 2 || diff === -1) {
-                    score += 1;
+                    humanWin += 1;
                     message = '승리';
                 } else if (diff === -2 || diff === 1) {
-                    score -= 1;
+                    comWin += 1;
                     message = '패배';
                 } else {
                     message = '무승부';
                 }
-
-                $score.textContent = `${message} 총 : ${score}`;
+                $score.textContent = `${message}  ${humanWin} : ${comWin}`;
                 clearInterval(intervalId);
                 //점수계산, 화면표시
                 setTimeout(() => {
                     clickable = true;
                     intervalId = setInterval(changeComputerHand, 50);
                 }, 1000);
+                if(humanWin === 3) {
+                    $score.textContent = `사용자의 승리 ${humanWin} : ${comWin}`;
+                    $scissors.disabled = true;
+                    $rock.disabled = true;
+                    $paper.disabled = true;
+                } else if (comWin === 3) {
+                    $score.textContent = `컴퓨터의 승리 ${humanWin} : ${comWin}`;
+                    $scissors.disabled = true;
+                    $rock.disabled = true;
+                    $paper.disabled = true;
+                }
             }
         }
         $scissors.addEventListener('click', clickButton)
