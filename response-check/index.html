@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>반응속도 체크</title>
+    <style>
+        #screen {
+            width: 300px;
+            height: 200px;
+            text-align: center;
+            user-select: none;
+        }
+        #screen.waiting {
+            background-color: aqua;
+        }
+        #screen.ready {
+            background-color: red;
+        }
+        #screen.now {
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+    <div id="screen" class="waiting">클릭해서 테스트를 시작하세요</div>
+    <div id="result"></div>
+    <script>
+        const $screen = document.querySelector("#screen");
+        const $result = document.querySelector("#result");
+        let startTime;
+        let endTime;
+        const records = [];
+        let timerId;
+        $screen.addEventListener('click', function() {
+            if($screen.classList.contains('waiting')) {
+                //대기화면 처리
+                $screen.classList.replace('waiting', 'ready');
+                $screen.textContent = '초록색이 되면 클릭하세요';
+                //준비화면 처리 : 2초 ~ 3초 있다가 now로 바뀌어야함
+                timerId = setTimeout(function() {
+                    startTime = new Date();
+                    $screen.classList.replace('ready', 'now');
+                    $screen.textContent = '클릭하세요!'
+                }, Math.floor((Math.random() * 1000) + 2000)) //2000 ~ 3000
+            } else if ($screen.classList.contains('ready')) {
+                //빨리 누르셨네요 (빨간 화면 상태일 때 클릭)
+                clearTimeout(timerId);
+                $screen.classList.replace('ready', 'waiting')
+                $screen.textContent = '너무 성급하군요!'
+            } else if ($screen.classList.contains('now')) {
+                //측정화면 처리 (반응속도)
+                endTime = new Date();
+                const current = endTime - startTime;
+                records.push(current);
+                const average = records.reduce((a,c) => a+c) / records.length;
+                $result.textContent = `현재 ${current}ms, 평균 ${average}ms`;
+                startTime = null;
+                endTime = null;
+                $screen.classList.replace('now', 'waiting');
+                $screen.textContent = '클릭해서 테스트를 시작하세요';
+            }
+        })
+    </script>
+</body>
+</html>
