@@ -83,27 +83,7 @@
             position:absolute; /* 브라우저 창 기준 */
             top: 90%;
         }
-        /* #btn-left:hover {
-                    animation: slide-fwd-tl 0.2s cubic-bezier(0.445, 0.050, 0.550, 0.950) both;
-        }
-        /* @-webkit-keyframes  slide-fwd-t1 {
-        0% {
-                    transform: translateZ(0) translateY(0) translateX(0);
-        }
-        100% {
-                    transform: translateZ(160px) translateY(-100px) translateX(-100px);
-        }
-        } */
-        @keyframes slide-fwd-tl {
-        0% {
-            -webkit-transform: translateZ(0) translateY(0) translateX(0);
-                    transform: translateZ(0) translateY(0) translateX(0);
-        }
-        100% {
-            -webkit-transform: translateZ(160px) translateY(-100px) translateX(-100px);
-                    transform: translateZ(160px) translateY(-100px) translateX(-100px);
-        }
-        } */
+
         
     </style>
 </head>
@@ -115,7 +95,7 @@
         <button id="btn-right" >오른쪽</button>
     </div>
     <div class="arrow-img">
-        <img src="./leftarow.png" id="left-arrow" >
+        <img src="./leftarrow.png" id="left-arrow" >
         <img src="./arrow.png" id="middle-arrow" >
         <img src="./rightarrow.png" id="right-arrow" >
     </div>
@@ -123,6 +103,16 @@
     <div id="ball"></div>
     <script>
         const $ball =document.querySelector('#ball');
+        const $btnLeft = document.querySelector('#btn-left');
+        const $leftArrow = document.querySelector('#left-arrow');
+
+            $btnLeft.addEventListener('mouseover', () => {
+                $leftArrow.style.transform = 'translateZ(200px) translateY(-100px) translateX(-100px)';
+            });
+
+            $btnLeft.addEventListener('mouseout', () => {
+                $leftArrow.style.transform = 'translateZ(0) translateY(0) translateX(0)';
+            });
     </script>
 </body>
 </html>
