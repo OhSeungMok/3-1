@@ -20,7 +20,7 @@
             position: absolute;
             top: 0;
             bottom: 0;
-            width: 32%;
+            width: 33%;
             background-image: url(./goalpost.png);
             background-size: 100% 90%;
             filter: blur(6px);
@@ -44,22 +44,85 @@
             background-repeat: no-repeat;
             background-position: center;
         }
-        #way {
+        /* 버튼 설정 */
+        .btn {
             position: absolute;
+            top: 35%;
+            display: flex;
+            justify-content: space-between;
+            width: 300px;
+            height: 30px;
         }
-        /* 배경화면 설정 */
+
+        /* 화살표 그룹설정 */
+        .arrow-img {
+            position: absolute;
+            top: 80%;
+        }
+
+        /* 화살표 설정 */
+        #left-arrow {
+            width: 100px;
+            height: 100px;
+        }
+        #middle-arrow {
+            width: 30px;
+            height: 100px;
+        }
+        #right-arrow {
+            width: 100px;
+            height: 100px;
+        }
+        #ball {
+            background-image: url('./ball.png');
+            background-size: cover; /* 이미지가 요소를 덮도록 비율을 유지하며 크기를 조정 */
+            background-position: center; /* 이미지의 중앙을 기준으로 위치 */
+            background-repeat: no-repeat; /* 이미지를 반복하지 않음 */
+            width: 100px;
+            height: 100px;
+            position:absolute; /* 브라우저 창 기준 */
+            top: 90%;
+        }
+        /* #btn-left:hover {
+                    animation: slide-fwd-tl 0.2s cubic-bezier(0.445, 0.050, 0.550, 0.950) both;
+        }
+        /* @-webkit-keyframes  slide-fwd-t1 {
+        0% {
+                    transform: translateZ(0) translateY(0) translateX(0);
+        }
+        100% {
+                    transform: translateZ(160px) translateY(-100px) translateX(-100px);
+        }
+        } */
+        @keyframes slide-fwd-tl {
+        0% {
+            -webkit-transform: translateZ(0) translateY(0) translateX(0);
+                    transform: translateZ(0) translateY(0) translateX(0);
+        }
+        100% {
+            -webkit-transform: translateZ(160px) translateY(-100px) translateX(-100px);
+                    transform: translateZ(160px) translateY(-100px) translateX(-100px);
+        }
+        } */
+        
     </style>
 </head>
 <body>
     <div id="main-bg"></div>
-    <div id="way">
-        <img src="./bendingarrow.png">
-        <img src="./arrow.png"
-        <button id="left">왼쪽</button>
-        <button id="center">중앙</button>
-        <button id="right">오른쪽</button>
+    <div class="btn">
+        <button id="btn-left" >왼쪽</button>
+        <button id="btn-center" >중앙</button>
+        <button id="btn-right" >오른쪽</button>
+    </div>
+    <div class="arrow-img">
+        <img src="./leftarow.png" id="left-arrow" >
+        <img src="./arrow.png" id="middle-arrow" >
+        <img src="./rightarrow.png" id="right-arrow" >
     </div>
     <div id="score"></div>
     <div id="ball"></div>
+    <script>
+        const $ball =document.querySelector('#ball');
+    </script>
 </body>
 </html>
