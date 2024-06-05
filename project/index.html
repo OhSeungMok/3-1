@@ -65,7 +65,7 @@
             width: 100px;
             height: 100px;
         }
-        #middle-arrow {
+        #center-arrow {
             width: 30px;
             height: 100px;
         }
@@ -96,23 +96,91 @@
     </div>
     <div class="arrow-img">
         <img src="./leftarrow.png" id="left-arrow" >
-        <img src="./arrow.png" id="middle-arrow" >
+        <img src="./arrow.png" id="center-arrow" >
         <img src="./rightarrow.png" id="right-arrow" >
     </div>
     <div id="score"></div>
     <div id="ball"></div>
+    <div id="goalImg">  </div>
     <script>
         const $ball =document.querySelector('#ball');
+
         const $btnLeft = document.querySelector('#btn-left');
+        const $btnCenter = document.querySelector('#btn-center');
+        const $btnRight = document.querySelector('#btn-right');
+
         const $leftArrow = document.querySelector('#left-arrow');
+        const $centerArrow = document.querySelector('#center-arrow');
+        const $rightArrow = document.querySelector('#right-arrow');
 
-            $btnLeft.addEventListener('mouseover', () => {
-                $leftArrow.style.transform = 'translateZ(200px) translateY(-100px) translateX(-100px)';
-            });
+        function moveBall(x, y) {
+            const randomValue = Math.random();
+            if (randomValue < 0.2) {
+                $ball.style.transform = `translate(${x}px, ${y}px)`;
+                $ball.style.transition = 'transform 300ms';
+                setTimeout(() => {
+                    alert('골키퍼가 막았습니다!');
+                    $ball.style.transform = `translate(0px, 0px)`;
+                }, 300);
+            } else if (randomValue < 0.4) {
+                $ball.style.transform = `translate(${x-300}px, ${y-300}px)`;
+                $ball.style.transition = 'transform 300ms';
+                setTimeout(() => {
+                    alert('공이 빗나갔습니다');
+                    $ball.style.transform = `translate(0px, 0px)`;
+                }, 300);
+            } else {
+                $ball.style.transform = `translate(${x}px, ${y}px)`;
+                $ball.style.transition = 'transform 300ms';
+                setTimeout(() => {
+                    alert('골이 들어갔습니다!')
+                    $ball.style.transform = `translate(0px, 0px)`;
+                }, 300);
+            }
+        }
 
-            $btnLeft.addEventListener('mouseout', () => {
-                $leftArrow.style.transform = 'translateZ(0) translateY(0) translateX(0)';
-            });
+        $btnLeft.addEventListener('mouseover', () => {
+            $leftArrow.style.transform = 'translateZ(100px) translateY(-100px) translateX(-100px) scale(3)';
+            $leftArrow.style.transition = 'transform 300ms';
+        });
+
+        $btnLeft.addEventListener('mouseout', () => {
+            $leftArrow.style.transform = 'translateZ(0) translateY(0) translateX(0) ';
+            $leftArrow.style.transition ='transform 300ms';
+        });
+            
+        $btnCenter.addEventListener('mouseover', () => {
+            $centerArrow.style.transform = 'translateZ(0px) translateY(-100px) translateX(0px) scale(3)';
+            $centerArrow.style.transition = 'transform 300ms';
+        });
+
+        $btnCenter.addEventListener('mouseout', () => {
+            $centerArrow.style.transform = 'translateZ(0) translateY(0) translateX(0) ';
+            $centerArrow.style.transition ='transform 300ms';
+        });
+
+        $btnRight.addEventListener('mouseover', () => {
+            $rightArrow.style.transform = 'translateZ(-100px) translateY(-100px) translateX(100px) scale(3)';
+            $rightArrow.style.transition = 'transform 300ms';
+        });
+
+        $btnRight.addEventListener('mouseout', () => {
+            $rightArrow.style.transform = 'translateZ(0) translateY(0) translateX(0) ';
+            $rightArrow.style.transition ='transform 300ms';
+        });
+
+        // 공 이동 애니메이션 설정
+        $btnLeft.addEventListener('click', () => {
+            moveBall(-200, -300);
+        });
+
+        $btnCenter.addEventListener('click', () => {
+            moveBall(0, -300);
+        });
+
+        $btnRight.addEventListener('click', () => {
+            moveBall(200, -300);
+        });
     </script>
 </body>
 </html>
