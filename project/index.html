@@ -182,7 +182,11 @@
         const $centerArrow = document.querySelector('#center-arrow');
         const $rightArrow = document.querySelector('#right-arrow');
 
+        let goals = 0;
+        let temp = 0; 
+        
         function moveBall(x, y) {
+            temp++;
             const randomValue = Math.random();
             if (randomValue < 0.2) {
                 $ball.style.transform = `translate(${x}px, ${y}px)`;
@@ -214,6 +218,7 @@
                     $goalImg.style.animation = 'shake 1s'
                     $ball.style.transform = `translate(0px, 0px)`;
                     updateScore('goal');
+                    goals ++;
                     setTimeout(() => {
                         $goalImg.style.display = 'none';
                     }, 2000); 
@@ -225,6 +230,19 @@
             const circle = document.createElement('div');
             circle.classList.add('circle', result);
             $score.appendChild(circle);
+            if (temp <= 5) {
+                if (goals >= 3) {
+                    setTimeout(() => {
+                        alert('축하합니다! 승리했습니다!');
+                        $score.innerHTML = '';
+                    }, 300);
+                } else if (temp === 5 && goals < 3){
+                    setTimeout(() => {
+                        alert('졌습니다.');
+                        $score.innerHTML = '';
+                    }, 300);
+                }
+            }
         }
 
         $btnLeft.addEventListener('mouseover', () => {
