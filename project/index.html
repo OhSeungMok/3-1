@@ -121,6 +121,34 @@
         .miss {
             background-color: red;
         }
+         /* 강력한 골 흔들리는 애니메이션 */
+        @keyframes shake {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            10% { transform: translate(-50%, -50%) rotate(10deg); }
+            20% { transform: translate(-50%, -50%) rotate(-10deg); }
+            30% { transform: translate(-50%, -50%) rotate(10deg); }
+            40% { transform: translate(-50%, -50%) rotate(-10deg); }
+            50% { transform: translate(-50%, -50%) rotate(10deg); }
+            60% { transform: translate(-50%, -50%) rotate(-10deg); }
+            70% { transform: translate(-50%, -50%) rotate(10deg); }
+            80% { transform: translate(-50%, -50%) rotate(-10deg); }
+            90% { transform: translate(-50%, -50%) rotate(10deg); }
+            100% { transform: translate(-50%, -50%) rotate(0deg); }
+        }
+
+        #goalKeeper {
+            display: none; /* 기본적으로 이미지가 숨겨짐 */
+            position: absolute;
+            top: 60%; /* 중앙에서 약간 위로 조정 */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1100px; /* 이미지가 짤리지 않도록 너비와 높이 조정 */
+            height: 1000px;
+            background-image: url('./goalkeeper.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            z-index: 2;
+        }
     </style>
 </head>
 <body>
@@ -138,9 +166,12 @@
     <div id="score"></div>
     <div id="ball"></div>
     <div id="goalImg"></div>
+    <div id="goalKeeper"></div>
     <script>
+        const $mainBg = document.querySelector('#main-bg');
         const $ball = document.querySelector('#ball');
         const $goalImg = document.querySelector('#goalImg');
+        const $goalKeeper = document.querySelector('#goalKeeper');
         const $score = document.querySelector('#score');
 
         const $btnLeft = document.querySelector('#btn-left');
@@ -158,8 +189,13 @@
                 $ball.style.transition = 'transform 300ms';
                 setTimeout(() => {
                     alert('골키퍼가 막았습니다!');
+                    $mainBg.style.ba
+                    $goalKeeper.style.display = 'block';
                     $ball.style.transform = `translate(0px, 0px)`;
                     updateScore('miss');
+                    setTimeout(() => {
+                        $goalKeeper.style.display = 'none';
+                    }, 2000); 
                 }, 300);
             } else if (randomValue < 0.4) {
                 $ball.style.transform = `translate(${x-300}px, ${y-300}px)`;
@@ -175,8 +211,12 @@
                 setTimeout(() => {
                     alert('골이 들어갔습니다!');
                     $goalImg.style.display = 'block';
+                    $goalImg.style.animation = 'shake 1s'
                     $ball.style.transform = `translate(0px, 0px)`;
                     updateScore('goal');
+                    setTimeout(() => {
+                        $goalImg.style.display = 'none';
+                    }, 2000); 
                 }, 300);
             }
         }
