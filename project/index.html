@@ -190,6 +190,7 @@
         const $rightArrow = document.querySelector('#right-arrow');
 
         const shouting = new Audio('shouting.mp3');
+        const clap = new Audio('clap.mp3');
 
         let goals = 0;
         let temp = 0; 
@@ -244,6 +245,7 @@
                 setTimeout(() => {
                     if (goals >= 3) {
                         alert('축하합니다! 승리했습니다!');
+                        clap.play();
                     } else {
                         alert('졌습니다.');
                     }
