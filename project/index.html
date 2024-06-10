@@ -51,10 +51,26 @@
             top: 35%;
             display: flex;
             justify-content: space-between;
-            width: 300px;
-            height: 30px;
+            width: 400px;
+            height: 50px;
         }
 
+        #btn-left, #btn-center, #btn-right {
+            width: 80px;
+            height: 40px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 300ms, transform 300ms;
+        }
+
+        #btn-left:hover, #btn-center:hover, #btn-right:hover {
+            background-color: #45a049;
+            transform: scale(1.1);
+        }
         /* 화살표 그룹설정 */
         .arrow-img {
             position: absolute;
@@ -62,7 +78,7 @@
         }
 
         /* 화살표 설정 */
-        #left-arrow {
+        #left-arrow, #right-arrow {
             width: 100px;
             height: 100px;
         }
@@ -70,10 +86,7 @@
             width: 30px;
             height: 100px;
         }
-        #right-arrow {
-            width: 100px;
-            height: 100px;
-        }
+        /* 공 설정 */
         #ball {
             background-image: url('./ball.png');
             background-size: cover; /* 이미지가 요소를 덮도록 비율을 유지하며 크기를 조정 */
@@ -84,6 +97,7 @@
             position:absolute; /* 브라우저 창 기준 */
             top: 90%;
         }
+        /* 득점 이미지 */
         #goalImg {
             display: none; /* 기본적으로 이미지가 숨겨짐 */
             position: absolute;
@@ -98,7 +112,7 @@
             z-index: 2;
         }
 
-        /* SCORE 영역 스타일 설정 */
+        /* SCORE 설정 */
         #score {
             position: absolute;
             top: 10%;
@@ -107,17 +121,17 @@
             display: flex;
             gap: 10px;
         }
-
+        /* 원 설정 */
         .circle {
             width: 20px;
             height: 20px;
             border-radius: 50%;
         }
-
+        /* 득점시 */
         .goal {
             background-color: green;
         }
-
+        /* 실패시 */
         .miss {
             background-color: red;
         }
@@ -128,6 +142,7 @@
             20%, 40%, 60%, 80% { transform: translate(-50%, -50%) rotate(-10deg); }
         }
 
+        /* 골키퍼 이미지 */
         #goalKeeper {
             display: none; /* 기본적으로 이미지가 숨겨짐 */
             position: absolute;
@@ -174,6 +189,8 @@
         const $centerArrow = document.querySelector('#center-arrow');
         const $rightArrow = document.querySelector('#right-arrow');
 
+        const shouting = new Audio('shouting.mp3');
+
         let goals = 0;
         let temp = 0; 
         
@@ -205,6 +222,7 @@
                 $ball.style.transition = 'transform 300ms';
                 setTimeout(() => {
                     alert('골이 들어갔습니다!');
+                    shouting.play();
                     $goalImg.style.display = 'block';
                     $goalImg.style.animation = 'shake 1s'
                     $ball.style.transform = `translate(0px, 0px)`;
