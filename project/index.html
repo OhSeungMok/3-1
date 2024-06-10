@@ -122,18 +122,10 @@
             background-color: red;
         }
          /* 강력한 골 흔들리는 애니메이션 */
-        @keyframes shake {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            10% { transform: translate(-50%, -50%) rotate(10deg); }
-            20% { transform: translate(-50%, -50%) rotate(-10deg); }
-            30% { transform: translate(-50%, -50%) rotate(10deg); }
-            40% { transform: translate(-50%, -50%) rotate(-10deg); }
-            50% { transform: translate(-50%, -50%) rotate(10deg); }
-            60% { transform: translate(-50%, -50%) rotate(-10deg); }
-            70% { transform: translate(-50%, -50%) rotate(10deg); }
-            80% { transform: translate(-50%, -50%) rotate(-10deg); }
-            90% { transform: translate(-50%, -50%) rotate(10deg); }
-            100% { transform: translate(-50%, -50%) rotate(0deg); }
+         @keyframes shake {
+            0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+            10%, 30%, 50%, 70%, 90% { transform: translate(-50%, -50%) rotate(10deg); }
+            20%, 40%, 60%, 80% { transform: translate(-50%, -50%) rotate(-10deg); }
         }
 
         #goalKeeper {
@@ -193,7 +185,6 @@
                 $ball.style.transition = 'transform 300ms';
                 setTimeout(() => {
                     alert('골키퍼가 막았습니다!');
-                    $mainBg.style.ba
                     $goalKeeper.style.display = 'block';
                     $ball.style.transform = `translate(0px, 0px)`;
                     updateScore('miss');
@@ -230,18 +221,19 @@
             const circle = document.createElement('div');
             circle.classList.add('circle', result);
             $score.appendChild(circle);
-            if (temp <= 5) {
-                if (goals >= 3) {
-                    setTimeout(() => {
+            
+            if (temp === 5) {
+                setTimeout(() => {
+                    if (goals >= 3) {
                         alert('축하합니다! 승리했습니다!');
-                        $score.innerHTML = '';
-                    }, 300);
-                } else if (temp === 5 && goals < 3){
-                    setTimeout(() => {
+                    } else {
                         alert('졌습니다.');
-                        $score.innerHTML = '';
-                    }, 300);
-                }
+                    }
+                    // 상태 초기화
+                    $score.innerHTML = '';
+                    goals = 0;
+                    temp = 0;
+                }, 300);
             }
         }
 
