@@ -17,16 +17,17 @@
         var hp = 3;
         $("#drone").click(function() {      
           console.log("침 발사");       
-          $("#spit").fadeIn();      
-          $("#spit").animate({left: '+=250'}) 
-          $("#spit").fadeOut(function() {
+          $("#spit").fadeIn(); //#spit이라는 ID를 가진 요소를 서서히 나타나게 함
+          $("#spit").animate({left: '+=250'}) //#spit 요소를 현재 위치에서 오른쪽으로 250픽셀 이동
+          $("#spit").fadeOut(function() { //#spit 요소를 서서히 사라지게 하고, 사라진 후에 콜백 함수가 실행
             hp = hp - 1;
             $("#hp").text("HP: " + hp);      
             if (hp == 0) {
-              $("#bunker").fadeOut();
+              $("#bunker").fadeOut(); //체력이 0이 되면 #bunker 요소를 서서히 사라지게 함
             }
           });     
-          $("#spit") .css({left:'150px'});//초기 위치      
+          $("#spit") .css({left:'150px'});//초기 위치 
+          //#spit 요소의 left 속성을 150픽셀로 초기화함. 이는 애니메이션이 끝난 후 요소를 원래 위치로 되돌리는 역할     
         });
       </script>
 </body>

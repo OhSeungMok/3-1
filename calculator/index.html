@@ -62,17 +62,17 @@
       const $operator = document.querySelector("#operator");
       const $result = document.querySelector("#result");
 
-      const onClickNum = (event) => {
-        if (!operator) {
-          numOne += event.target.textContent;
-          $result.value += event.target.textContent;
+      const onClickNum = (event) => { //숫자 버튼을 클릭했을 때 호출되는 함수
+        if (!operator) { //연산자가 입력되지 않은 경우
+          numOne += event.target.textContent; //클릭된 버튼의 값을 numOne에 값 넣기
+          $result.value += event.target.textContent; //result에 클릭된 버튼의 텍스트 콘텐츠를 추가
           return;
         }
-        if (!numTwo) {
-          $result.value = "";
+        if (!numTwo) { //연산자가 있으면서 numTwo가 비어있는 경우
+          $result.value = ""; //$result.value를 빈 문자열로 설정, 두 번째 숫자를 입력하기 시작할 때, 화면을 초기화
         }
-        numTwo += event.target.textContent;
-        $result.value += event.target.textContent;
+        numTwo += event.target.textContent; //클릭된 버튼의 값을 numTwo에 값 넣기
+        $result.value += event.target.textContent; //result에 클릭된 버튼의 텍스트 콘텐츠를 추가
       };
 
       // num-0번 부터 num-9번까지 
@@ -80,15 +80,15 @@
             document.querySelector(`#num-${i}`).addEventListener('click', onClickNum);
       }
 
-      const onClickOperator = (op) => () => {
-        if (numTwo) {
-          calculate();
-          operator = op;
-          $operator.value = op;
+      const onClickOperator = (op) => () => { //이 함수는 연산자(op)를 인자로 받아, 클로저를 반환. 반환된 함수는 연산자 버튼 클릭 시 호출. op는 클릭된 연산자 버튼의 값(예: '+', '-', '*', '/')를 의미.
+        if (numTwo) { //두번 째 숫자가 있을 경우
+          calculate(); //calculate 함수를 호출하여 현재까지 입력된 숫자와 연산자를 이용해 계산
+          operator = op; //연산자(operator)를 현재 클릭된 연산자(op)로 설정
+          $operator.value = op; //연산자 표시 필드($operator.value)를 현재 클릭된 연산자(op)로 업데이트.
         }
-        if (numOne) {
-          operator = op;
-          $operator.value = op;
+        if (numOne) { //첫번 째 숫자가 있을 경우
+          operator = op; //연산자(operator)를 현재 클릭된 연산자(op)로 설정
+          $operator.value = op; ////연산자 표시 필드($operator.value)를 현재 클릭된 연산자(op)로 업데이트.
         } else {
           alert("숫자를 먼저 입력하세요.");
         }

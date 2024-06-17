@@ -31,10 +31,10 @@
         let isloading = false;
         
         function drawBall(number, $parent) {
-            const $ball = document.createElement('div');
-            $ball.className = 'ball';
-            $ball.textContent = number;
-            $parent.appendChild($ball);
+            const $ball = document.createElement('div'); //새로운 div 요소를 생성하여 $ball 변수에 저장
+            $ball.className = 'ball'; //생성된 div 요소의 클래스 이름을 'ball'로 설정
+            $ball.textContent = number; //div 요소의 텍스트 콘텐츠를 매개변수 number로 설정
+            $parent.appendChild($ball); //매개변수 $parent 요소에 생성된 div 요소를 자식으로 추가
             if (number < 10) {
                 $ball.style.backgroundColor = 'red';
                 $ball.style.color = "white";
@@ -55,9 +55,9 @@
             setTimeout(resolve, ms);
         })
 
-        $form.addEventListener('submit', async (event) => {
+        $form.addEventListener('submit', async (event) => { //폼(form)의 submit 이벤트를 감지하여 처리
             event.preventDefault();
-            if(isloading) return;   
+            if(isloading) return; /// isloading 변수를 통해 현재 로딩 중인지 여부를 체크하고, 이미 로딩 중이면 함수를 종료
             isloading = true;
             
             $result.innerHTML = '당첨 숫자: ';
@@ -67,7 +67,7 @@
             if(!string.trim()) {//숫자 입력 확인
                 return alert('숫자를 입력하세요.')
             }
-            const myNumbers = string.split(',').map((v) => parseInt(v.trim()));
+            const myNumbers = string.split(',').map((v) => parseInt(v.trim())); //string 변수에 저장된 문자열을 쉼표(,)를 기준으로 분리
             if (myNumbers.length !== 6) { //숫자 6개인지 확인
                 return alert('숫자를 6개 입력하세요.');
             }
