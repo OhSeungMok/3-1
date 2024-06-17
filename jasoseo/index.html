@@ -23,8 +23,10 @@
             var content = document.getElementById("jasoseo").value;
             if (content.length > 200) {
                 content = content.substring(0, 200);
+                //substring(0, 200)은 문자열 content의 0번째 인덱스부터 199번째 인덱스까지의 부분 문자열을 반환
                 document.getElementById('jasoseo').value = content;
             }
+            //count라는 ID를 가진 HTML 요소의 내용을 현재 content의 길이와 최대 글자 수인 200자로 설정
             document.getElementById("count").innerHTML = '(' + content.length + '/200)';
         }
     </script>
