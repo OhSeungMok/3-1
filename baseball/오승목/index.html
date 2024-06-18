@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>기말고사(1반)</title>
+    <style>
+      table {
+        border-collapse: collapse;
+      }
+      td {
+        border: 1px solid black;
+        width: 40px;
+        height: 40px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>기말고사(1반)</h1>
+    
+    <h3>문제 1번 : 랜덤 숫자 생성기</h3>
+    <button id="button">랜덤 숫자 생성</button>
+    <p id="random-number-display"></p>
+
+    <br />
+    <br />
+
+    <h3>문제 2번 : 텍스트 변환기</h3>
+    <textarea id="text-input" placeholder="텍스트를 입력하세요"></textarea>
+    <div>generate-random-number
+      <button id="to-uppercase">대문자로 변환</button>
+      <button id="to-lowercase">소문자로 변환</button>
+    </div>
+    <p id="transformed-text"></p>
+
+    <br />
+    <br />
+    <h3>문제 3번</h3>
+    <script>
+        // 1번 문제
+        const $randomNumber = document.querySelector('#random-number-display');
+        const $button = document.querySelector('#button');
+	    
+        function onClickButton() {
+            var num = parseInt(Math.random()*100+1);
+            $randomNumber.innerHTML = num;
+        }
+        $button.addEventListener('click', onClickButton);
+        
+        // 2번 문제
+        const $textInput = document.querySelector('#text-input');
+        const $toUppercase = document.querySelector('#to-uppercase');
+        const $toLowercase = document.querySelector('#to-lowercase');
+        const $transformedText = document.querySelector('#transformed-text');
+
+        function toUpperButton() {
+            var content = $textInput.value;
+            $transformedText.innerHTML = content.toUpperCase();
+        }
+
+        function toLowerButton() {
+            var content = $textInput.value;
+            $transformedText.innerHTML = content.toLowerCase();
+        }
+        $toUppercase.addEventListener('click', toUpperButton);
+        $toLowercase.addEventListener('click', toLowerButton);
+
+        //3번 문제
+        const {body} = document;
+        const $table = document.createElement("table");
+        const $result = document.createElement("div");
+        const rows = [];
+
+        let turn = 'O';
+
+        const checkWinner = (target) => { //승패 판단
+            const rowIndex = target.parentNode.rowIndex;
+            const cellIndex = target.cellIndex;
+            let hasWinner = false; //세 칸이 같은 모양으로 채워졌는지 여부
+            if ( //가로줄 검사
+                rows[rowIndex][0].textContent === turn&&
+                rows[rowIndex][1].textContent === turn&&
+                rows[rowIndex][2].textContent === turn
+            ) {
+                hasWinner = true;
+            }
+            if ( //세로줄 검사
+                rows[0][cellIndex].textContent === turn&&
+                rows[1][cellIndex].textContent === turn&&
+                rows[2][cellIndex].textContent === turn
+            ) {
+                hasWinner = true;
+            }
+            if ( //대각선 검사
+                rows[0][0].textContent === turn&&
+                rows[1][1].textContent === turn&&
+                rows[2][2].textContent === turn
+            ) {
+                hasWinner = true;
+            }
+            if ( //대각선 검사
+                rows[0][2].textContent === turn&&
+                rows[1][1].textContent === turn&&
+                rows[2][0].textContent === turn
+            ) {
+                hasWinner = true;
+            }
+            return hasWinner;
+        }
+        
+
+        const callback = (event) => {
+        turn = 'O';
+            if(event.target.textContent !== '') { 
+                return; //빈칸이 아닐 경우 함수 종료
+            }
+            //td가 빈칸일 경우
+            event.target.textContent = turn;
+            const hasWinner = checkWinner(event.target);
+            if (hasWinner) {
+                $result.textContent = `${turn}님이 승리`;
+                $table.removeEventListener('click', callback); //이벤트 리스너 제거
+                return;
+            }
+            const draw = rows.flat().every((cell) => cell.textContent) //1차원 배열로 만들어서 참인지 거짓인지 판별
+            if(draw) {
+                $result.textContent = "무승부";
+            }
+            
+            turn = 'X';
+
+            // 컴퓨터
+            const emptyCell = rows.flat().filter(cell => cell.textContent === '');
+            if (emptyCell.length > 0) {
+                const randomCell = emptyCell[Math.floor(Math.random() * emptyCell.length)];
+                randomCell.textContent = turn;
+                if (checkWinner(randomCell)) {
+                    $result.textContent = `${turn}님이 승리`;
+                    $table.removeEventListener('click', callback);
+                    return;
+                }
+            }
+        }
+
+        for (let i=1; i<=3; i++) {
+            const $tr = document.createElement('tr');
+            const cells = [];
+            for (let j=1; j<=3; j++) {
+                const $td = document.createElement('td');
+                // $table.addEventListener('click', callback)
+                cells.push($td);
+                $tr.appendChild($td);
+            }
+            rows.push(cells);
+            $table.appendChild($tr);
+        }
+        body.appendChild($table);
+        body.appendChild($result);
+        $table.addEventListener('click', callback) //이벤트 버블링
+
+    </script>
+  </body>
+</html>
